@@ -1,0 +1,22 @@
+---
+import Header from "../components/Header.astro";
+import ContactSection from "../components/ContactSection.astro";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import MethodSection from "../components/MethodSection.astro";
+import ProblemSection from "../components/ProblemSection.astro";
+import SectionReveal from "../components/SectionReveal.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <Header />
+  <main id="main-content" tabindex="-1">
+    <Hero />
+    <ProblemSection />
+    <MethodSection />
+    <ContactSection />
+  </main>
+  <Footer />
+  <SectionReveal />
+</BaseLayout>

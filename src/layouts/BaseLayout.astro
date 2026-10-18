@@ -1,0 +1,36 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Diagnóstico empresarial basado en evidencia | VYSIONEX",
+  description =
+    "Conocé la propuesta de diagnóstico empresarial de VYSIONEX para comprender costos, procesos y oportunidades y priorizar próximos pasos."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050A19" />
+    <meta name="description" content={description} />
+    <!-- Prelaunch: remove only after contact, privacy and publication QA are approved. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="VYSIONEX" />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

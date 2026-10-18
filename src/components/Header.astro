@@ -1,0 +1,314 @@
+---
+import ActionLink from "./ActionLink.astro";
+import Container from "./Container.astro";
+---
+
+<header class="site-header" data-site-header>
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+  <Container as="div" class="site-header__inner">
+    <a class="site-header__brand" href="#inicio" aria-label="VYSIONEX, ir al inicio" data-nav-link>
+      VYSIONEX
+    </a>
+
+    <nav class="site-header__desktop-nav" aria-label="Navegación principal">
+      <a href="#metodo" data-nav-link>Método</a>
+      <a href="#contacto" data-nav-link>Contacto</a>
+    </nav>
+
+    <div class="site-header__desktop-action">
+      <ActionLink href="#contacto" variant="compact">Solicitar diagnóstico</ActionLink>
+    </div>
+
+    <details class="site-header__mobile-menu" data-mobile-menu>
+      <summary aria-label="Navegación principal">
+        <span class="site-header__menu-label">Menú</span>
+        <span class="site-header__menu-icon" aria-hidden="true"><i></i><i></i></span>
+      </summary>
+      <nav class="site-header__mobile-panel" aria-label="Navegación principal móvil">
+        <a href="#metodo" data-nav-link>Método</a>
+        <a href="#contacto" data-nav-link>Contacto</a>
+        <ActionLink href="#contacto">Solicitar diagnóstico</ActionLink>
+      </nav>
+    </details>
+  </Container>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>("[data-site-header]");
+  const mobileMenu = document.querySelector<HTMLDetailsElement>("[data-mobile-menu]");
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"));
+  const hashLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'));
+
+  const updateHeader = () => {
+    header?.toggleAttribute("data-scrolled", window.scrollY > 12);
+  };
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+
+  mobileMenu?.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && mobileMenu.open) {
+      mobileMenu.open = false;
+      mobileMenu.querySelector<HTMLElement>("summary")?.focus();
+    }
+  });
+
+  mobileMenu?.addEventListener("toggle", () => {
+    mobileMenu.querySelector("summary")?.setAttribute("aria-label", mobileMenu.open ? "Cerrar navegación" : "Abrir navegación");
+  });
+
+  document.addEventListener("click", (event) => {
+    if (mobileMenu?.open && event.target instanceof Node && !mobileMenu.contains(event.target)) {
+      mobileMenu.open = false;
+    }
+  });
+
+  window.matchMedia("(min-width: 48rem)").addEventListener("change", (event) => {
+    if (event.matches && mobileMenu) mobileMenu.open = false;
+  });
+
+  hashLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      const hash = link.getAttribute("href");
+      if (!hash || hash === "#") return;
+
+      const target = document.getElementById(hash.slice(1));
+      if (!target) return;
+      if (mobileMenu) mobileMenu.open = false;
+
+      window.setTimeout(() => {
+        if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+        target.focus({ preventScroll: true });
+      }, 0);
+    });
+  });
+
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-section]"));
+  if ("IntersectionObserver" in window && sections.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible?.target.id) return;
+        const activeHash = `#${visible.target.id}`;
+        navLinks.forEach((link) => {
+          if (link.getAttribute("href") === activeHash) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      },
+      { rootMargin: "-25% 0px -60%", threshold: [0, 0.15, 0.5] }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
+
+<style>
+  .site-header {
+    background: rgb(5 10 25 / 86%);
+    border-bottom: 1px solid transparent;
+    inset: 0 0 auto;
+    min-height: var(--header-height);
+    position: sticky;
+    transition:
+      background-color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out),
+      backdrop-filter var(--duration-fast) var(--ease-out);
+    z-index: var(--layer-header);
+  }
+
+  .site-header[data-scrolled] {
+    backdrop-filter: blur(16px);
+    background: rgb(5 10 25 / 86%);
+    border-bottom-color: var(--color-border);
+  }
+
+  .site-header :global(.site-header__inner) {
+    align-items: center;
+    display: flex;
+    gap: var(--space-3);
+    justify-content: space-between;
+    min-height: var(--header-height);
+  }
+
+  .skip-link {
+    width: max-content;
+    max-width: calc(100% - 2rem);
+    text-align: center;
+    background: var(--color-text);
+    border-radius: 0 0 var(--radius-control) var(--radius-control);
+    color: var(--color-bg);
+    font-weight: 700;
+    left: 50%;
+    padding: 0.7rem 1rem;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, -120%);
+    transition: transform var(--duration-fast) var(--ease-out);
+    z-index: calc(var(--layer-header) + 1);
+  }
+
+  .skip-link:focus {
+    transform: translate(-50%, 0);
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--color-text);
+    flex: 0 0 auto;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+  }
+
+  .site-header__desktop-nav {
+    align-items: center;
+    display: flex;
+    gap: var(--space-4);
+    margin-left: auto;
+  }
+
+  .site-header__desktop-nav a,
+  .site-header__mobile-panel > a:not(:global(.action-link)) {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .site-header__desktop-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    position: relative;
+  }
+
+  .site-header__desktop-nav a:hover,
+  .site-header__desktop-nav a[aria-current],
+  .site-header__mobile-panel > a:not(:global(.action-link)):hover,
+  .site-header__mobile-panel > a:not(:global(.action-link))[aria-current] {
+    color: var(--color-text);
+  }
+
+  .site-header__desktop-nav a[aria-current]::after {
+    background: var(--color-accent-light);
+    border-radius: 99px;
+    content: "";
+    display: block;
+    height: 2px;
+    margin-top: 0.35rem;
+    position: absolute;
+    inset: auto 0 .2rem;
+  }
+
+  .site-header__mobile-menu {
+    display: none;
+    position: relative;
+  }
+
+  .site-header__mobile-menu summary {
+    align-items: center;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-control);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    list-style: none;
+    min-height: 2.75rem;
+    padding-inline: 0.75rem;
+  }
+
+  .site-header__mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .site-header__menu-label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  .site-header__menu-icon {
+    display: grid;
+    gap: 0.25rem;
+    width: 1rem;
+  }
+
+  .site-header__menu-icon i {
+    background: currentColor;
+    display: block;
+    height: 1px;
+    transition: transform var(--duration-fast) var(--ease-out);
+    width: 100%;
+  }
+
+  .site-header__mobile-menu[open] .site-header__menu-icon i:first-child {
+    transform: translateY(0.16rem) rotate(45deg);
+  }
+
+  .site-header__mobile-menu[open] .site-header__menu-icon i:last-child {
+    transform: translateY(-0.16rem) rotate(-45deg);
+  }
+
+  .site-header__mobile-panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-panel);
+    box-shadow: 0 1.5rem 3.5rem rgb(0 0 0 / 28%);
+    display: grid;
+    gap: var(--space-1);
+    width: min(18rem, calc(100vw - (var(--gutter) * 2)));
+    max-height: calc(100dvh - var(--header-height-compact) - 1.5rem);
+    overflow-y: auto;
+    padding: var(--space-2);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.75rem);
+  }
+
+  .site-header__mobile-panel > a:not(:global(.action-link)) {
+    border-radius: calc(var(--radius-control) - 0.25rem);
+    min-height: 2.75rem;
+    padding: 0.75rem;
+  }
+
+  .site-header__mobile-panel > a:not(:global(.action-link)):hover {
+    background: var(--color-surface-raised);
+  }
+
+  @media (max-width: 47.99rem) {
+    .site-header {
+      min-height: var(--header-height-compact);
+    }
+
+    .site-header :global(.site-header__inner) {
+      min-height: var(--header-height-compact);
+    }
+
+    .site-header__desktop-nav,
+    .site-header__desktop-action {
+      display: none;
+    }
+
+    .site-header__mobile-menu {
+      display: block;
+      margin-left: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header,
+    .skip-link,
+    .site-header__menu-icon i {
+      transition: none;
+    }
+  }
+</style>

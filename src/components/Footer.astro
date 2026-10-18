@@ -1,0 +1,33 @@
+---
+import Container from "./Container.astro";
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <Container>
+    <div class="site-footer__top">
+      <div>
+        <a class="site-footer__brand" href="#inicio" aria-label="VYSIONEX, volver al inicio">VYSIONEX</a>
+        <p>Proyecto en etapa inicial orientado al diagnóstico empresarial.</p>
+      </div>
+      <nav aria-label="Navegación del pie de página">
+        <a href="#inicio">Inicio</a>
+        <a href="#metodo">Método</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+    <p class="site-footer__copyright">© {year} VYSIONEX</p>
+  </Container>
+</footer>
+
+<style>
+  .site-footer { border-top: 1px solid var(--color-border); padding-block: var(--space-6) var(--space-4); }
+  .site-footer__top { display: flex; justify-content: space-between; align-items: start; gap: var(--space-4); flex-wrap: wrap; }
+  .site-footer__brand { font-weight: 700; letter-spacing: .12em; text-decoration: none; }
+  p { max-width: 38ch; color: var(--color-text-muted); font-size: .875rem; }
+  nav { display: flex; flex-wrap: wrap; gap: .5rem var(--space-3); }
+  a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+  nav a { color: var(--color-text-muted); text-decoration: none; font-size: .875rem; }
+  nav a:hover { color: var(--color-text); text-decoration: underline; text-underline-offset: .25em; }
+  .site-footer__copyright { margin-top: var(--space-4); }
+</style>

@@ -1,0 +1,35 @@
+---
+import Container from "./Container.astro";
+import ContactForm from "./ContactForm.astro";
+---
+
+<section class="contact" id="contacto" data-section tabindex="-1" aria-labelledby="contact-title">
+  <Container>
+    <div class="contact__layout">
+      <div class="contact__intro">
+        <p class="contact__eyebrow">Contacto</p>
+        <h2 id="contact-title">Empecemos por entender tu negocio.</h2>
+        <p class="contact__description">Contanos qué desafíos estás enfrentando y evaluemos si un diagnóstico puede ayudarte a identificar oportunidades de mejora.</p>
+        <p class="contact__note">Una primera conversación para conocer tu contexto y evaluar los próximos pasos.</p>
+      </div>
+      <ContactForm />
+    </div>
+  </Container>
+</section>
+
+<style>
+  .contact {
+    padding-block: var(--section-space);
+    border-top: 1px solid var(--color-border);
+    background: radial-gradient(ellipse at 50% 100%, rgb(52 120 255 / 13%), transparent 70%);
+  }
+  .contact__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  .contact__eyebrow { color: var(--color-accent-light); text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; font-weight: 700; margin-bottom: var(--space-2); }
+  h2 { font-size: clamp(2rem, 3.8vw, 3.5rem); line-height: 1.08; letter-spacing: -.048em; text-wrap: balance; max-width: 15ch; }
+  .contact__description { color: var(--color-text-muted); margin-top: var(--space-3); max-width: 40ch; }
+  .contact__note { border-left: 2px solid var(--color-accent); padding-left: var(--space-2); margin-top: var(--space-4); font-size: .9375rem; max-width: 38ch; }
+  @media (max-width: 63.99rem) {
+    .contact__layout { grid-template-columns: minmax(0, 1fr); }
+    .contact__description { max-width: 55ch; }
+  }
+</style>

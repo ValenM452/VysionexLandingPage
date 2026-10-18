@@ -1,0 +1,219 @@
+---
+import Container from "./Container.astro";
+
+const methodSteps = [
+  {
+    number: "01",
+    title: "Comprender",
+    description:
+      "Relevamos información esencial del negocio mediante preguntas y las métricas que ya estén disponibles."
+  },
+  {
+    number: "02",
+    title: "Analizar",
+    description:
+      "Evaluamos la información para identificar posibles debilidades, riesgos y oportunidades de mejora."
+  },
+  {
+    number: "03",
+    title: "Priorizar",
+    description:
+      "Seleccionamos los tres problemas principales según su relevancia y su impacto potencial en el negocio."
+  },
+  {
+    number: "04",
+    title: "Proponer",
+    description:
+      "Preparamos un informe con los hallazgos y una propuesta de acciones para abordar las prioridades detectadas."
+  }
+];
+---
+
+<section class="method" id="metodo" data-section data-reveal-section tabindex="-1" aria-labelledby="metodo-title">
+  <Container>
+    <div class="method__intro" data-reveal style="--reveal-delay: 0ms">
+      <p class="section-eyebrow">Nuestra metodología</p>
+      <h2 id="metodo-title">De la información disponible a un plan de acción claro.</h2>
+      <p>
+        Abordamos el diagnóstico mediante un proceso estructurado que combina relevamiento, análisis y
+        criterio profesional.
+      </p>
+    </div>
+
+    <ol class="method__steps" aria-label="Etapas del diagnóstico empresarial">
+      {
+        methodSteps.map((step, index) => (
+          <li data-reveal style={`--reveal-delay: ${120 + index * 90}ms`}>
+            <span class="method__number" aria-hidden="true">{step.number}</span>
+            <div class="method__step-content">
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="method__note" data-reveal style="--reveal-delay: 500ms">
+      El diagnóstico no incluye automáticamente la implementación de las soluciones. Si corresponde,
+      esa etapa se propone y presupuesta por separado.
+    </p>
+  </Container>
+</section>
+
+<style>
+  .method {
+    background:
+      linear-gradient(180deg, rgb(10 20 48 / 30%) 0%, rgb(5 10 25 / 0%) 100%),
+      var(--color-bg);
+    border-top: 1px solid rgb(164 193 255 / 10%);
+    padding-block: var(--section-space);
+    position: relative;
+  }
+
+  .method__intro {
+    max-width: var(--content-max);
+  }
+
+  .section-eyebrow {
+    color: var(--color-accent-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 3.8vw, 3.5rem);
+    letter-spacing: -0.048em;
+    line-height: 1.08;
+    max-width: 15ch;
+    text-wrap: balance;
+  }
+
+  .method__intro > p:last-child {
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 0.96rem + 0.25vw, 1.125rem);
+    margin-top: var(--space-3);
+    max-width: 38rem;
+    text-wrap: pretty;
+  }
+
+  .method__steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    list-style: none;
+    margin: clamp(3rem, 7vw, 6rem) 0 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .method__steps::before {
+    background: var(--color-border);
+    content: "";
+    height: 1px;
+    left: 1.25rem;
+    position: absolute;
+    right: 1.25rem;
+    top: 1.25rem;
+  }
+
+  .method__steps li {
+    min-width: 0;
+    padding-inline: clamp(0.75rem, 1.6vw, 1.5rem);
+    position: relative;
+  }
+
+  .method__steps li:first-child {
+    padding-left: 0;
+  }
+
+  .method__steps li:last-child {
+    padding-right: 0;
+  }
+
+  .method__number {
+    align-items: center;
+    background: var(--color-surface-raised);
+    border: 1px solid rgb(106 199 255 / 38%);
+    border-radius: 50%;
+    color: var(--color-accent-light);
+    display: inline-flex;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    height: 2.5rem;
+    justify-content: center;
+    letter-spacing: 0.08em;
+    position: relative;
+    width: 2.5rem;
+    z-index: 1;
+  }
+
+  .method__step-content {
+    margin-top: var(--space-3);
+  }
+
+  h3 {
+    font-size: clamp(1.125rem, 1rem + 0.35vw, 1.375rem);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .method__step-content p,
+  .method__note {
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+  }
+
+  .method__step-content p {
+    margin-top: var(--space-2);
+    max-width: 16rem;
+  }
+
+  .method__note {
+    border-left: 2px solid var(--color-accent);
+    margin-top: clamp(3rem, 6vw, 5rem);
+    max-width: 46rem;
+    padding-left: var(--space-3);
+  }
+
+  @media (max-width: 63.99rem) {
+    .method__steps {
+      gap: 0;
+      grid-template-columns: minmax(0, 1fr);
+      margin-left: 0.2rem;
+    }
+
+    .method__steps::before {
+      bottom: 1.25rem;
+      height: auto;
+      left: 1.05rem;
+      right: auto;
+      top: 1.25rem;
+      width: 1px;
+    }
+
+    .method__steps li,
+    .method__steps li:first-child,
+    .method__steps li:last-child {
+      display: grid;
+      gap: var(--space-3);
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      padding: 0 0 var(--space-6);
+    }
+
+    .method__steps li:last-child {
+      padding-bottom: 0;
+    }
+
+    .method__step-content {
+      margin-top: 0.35rem;
+    }
+
+    .method__step-content p {
+      max-width: 34rem;
+    }
+  }
+</style>

@@ -1,0 +1,45 @@
+<!-- Deliberately non-submitting preview. Enable only after a receiver and privacy notice are approved. -->
+<div class="contact-form" role="group" aria-labelledby="form-title" aria-describedby="contact-unavailable">
+  <h3 id="form-title">Contanos sobre tu negocio</h3>
+  <p id="contact-unavailable" class="contact-form__notice">Las solicitudes todavía no están habilitadas. Este formulario no recibe ni envía datos.</p>
+  <fieldset disabled>
+    <legend class="sr-only">Datos de contacto — formulario no disponible</legend>
+    <div class="contact-form__fields">
+      <div class="field">
+        <label for="contact-name">Nombre <span>(obligatorio)</span></label>
+        <input id="contact-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" />
+      </div>
+      <div class="field">
+        <label for="contact-email">Email <span>(obligatorio)</span></label>
+        <input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="254" />
+      </div>
+      <div class="field field--wide">
+        <label for="contact-business">Nombre del negocio <span>(opcional)</span></label>
+        <input id="contact-business" name="business" type="text" autocomplete="organization" maxlength="120" />
+      </div>
+      <div class="field field--wide">
+        <label for="contact-message">Mensaje breve <span>(opcional)</span></label>
+        <textarea id="contact-message" name="message" rows="4" maxlength="1000" aria-describedby="contact-data-help"></textarea>
+        <p id="contact-data-help" class="field__help">No incluyas datos financieros, contraseñas ni información sensible.</p>
+      </div>
+    </div>
+    <button type="button" disabled aria-describedby="contact-unavailable">Solicitar diagnóstico</button>
+  </fieldset>
+</div>
+
+<style>
+  .contact-form { min-width: 0; padding: clamp(1.25rem, 3vw, 2.5rem); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-panel); }
+  h3 { font-size: 1.25rem; line-height: 1.3; letter-spacing: -.025em; }
+  .contact-form__notice { margin-block: var(--space-2) var(--space-3); color: var(--color-text-muted); font-size: .9375rem; }
+  fieldset { min-inline-size: 0; margin: 0; padding: 0; border: 0; }
+  .contact-form__fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-3) var(--space-2); }
+  .field { min-width: 0; display: grid; align-content: start; gap: .5rem; }
+  .field--wide { grid-column: 1 / -1; }
+  label { font-size: .875rem; font-weight: 600; }
+  label span, .field__help { color: var(--color-text-muted); font-weight: 400; }
+  input, textarea { width: 100%; min-width: 0; min-height: 3rem; padding: .75rem; border: 1px solid #637393; border-radius: var(--radius-control); background: var(--color-bg); color: var(--color-text); font-size: 1rem; opacity: 1; }
+  textarea { resize: vertical; }
+  .field__help { font-size: .8125rem; }
+  button { width: 100%; margin-top: var(--space-3); padding: .875rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-control); color: var(--color-text-muted); background: var(--color-surface-raised); font-weight: 700; line-height: 1.3; cursor: not-allowed; opacity: 1; }
+  @media (max-width: 35.99rem) { .contact-form__fields { grid-template-columns: minmax(0, 1fr); } }
+</style>

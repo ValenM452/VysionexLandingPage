@@ -1,0 +1,162 @@
+---
+import AbstractOrb from "./AbstractOrb.astro";
+import ActionLink from "./ActionLink.astro";
+import Container from "./Container.astro";
+---
+
+<section class="hero" id="inicio" data-section tabindex="-1" aria-labelledby="hero-title">
+  <Container>
+    <div class="hero__content">
+      <p class="hero__eyebrow hero__reveal">Diagnóstico empresarial basado en evidencia</p>
+      <h1 class="hero__title hero__reveal" id="hero-title">
+        <span>Entendé mejor tu negocio.</span>
+        <span>Decidí con evidencia.</span>
+      </h1>
+      <p class="hero__description hero__reveal">
+        Analizamos información clave para identificar puntos débiles, priorizar oportunidades y proponer próximos pasos concretos.
+      </p>
+      <div class="hero__actions hero__reveal" aria-label="Acciones principales">
+        <ActionLink href="#contacto">Solicitar diagnóstico</ActionLink>
+        <ActionLink href="#metodo" variant="secondary">Conocer el método</ActionLink>
+      </div>
+    </div>
+    <div class="hero__orb hero__reveal">
+      <AbstractOrb />
+    </div>
+  </Container>
+</section>
+
+<style>
+  .hero {
+    background:
+      radial-gradient(ellipse 52% 28% at 50% 100%, rgb(52 120 255 / 20%), transparent 72%),
+      linear-gradient(180deg, rgb(5 10 25 / 0%) 0%, rgb(10 20 48 / 22%) 100%);
+    min-height: max(42rem, calc(100svh - var(--header-height)));
+    overflow: hidden;
+    padding-block: clamp(6.5rem, 12vh, 9rem) clamp(3.5rem, 7vh, 5rem);
+    position: relative;
+  }
+
+  .hero :global(.container) {
+    align-items: center;
+    display: grid;
+    justify-items: center;
+  }
+
+  .hero__content {
+    min-width: 0;
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    max-width: 58rem;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .hero__eyebrow {
+    color: var(--color-accent-light);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+    margin-bottom: var(--space-3);
+    text-transform: uppercase;
+  }
+
+  .hero__title {
+    font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+    letter-spacing: -0.055em;
+    line-height: 1.03;
+    max-width: 64rem;
+    text-wrap: balance;
+  }
+
+  .hero__title span {
+    display: block;
+  }
+
+  .hero__description {
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 0.96rem + 0.3vw, 1.125rem);
+    margin-top: var(--space-3);
+    max-width: 40rem;
+    text-wrap: pretty;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+    margin-top: var(--space-4);
+  }
+
+  .hero__orb {
+    margin-top: clamp(2rem, 4vw, 3.5rem);
+    width: 100%;
+  }
+
+  .hero__reveal {
+    animation: hero-enter var(--duration-enter) var(--ease-out) both;
+  }
+
+  .hero__title { animation-delay: 80ms; }
+  .hero__description { animation-delay: 150ms; }
+  .hero__actions { animation-delay: 220ms; }
+  .hero__orb { animation-delay: 280ms; }
+
+  @keyframes hero-enter {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero {
+      min-height: auto;
+      padding-block: clamp(5.5rem, 15vw, 7rem) var(--space-8);
+    }
+
+    .hero__content {
+      justify-items: start;
+      text-align: left;
+    }
+
+    .hero__title {
+      font-size: clamp(2rem, 9.5vw, 3rem);
+      letter-spacing: -0.05em;
+      max-width: 20rem;
+      text-wrap: initial;
+    }
+
+    .hero__description {
+      max-width: 33rem;
+    }
+
+    .hero__actions {
+      align-self: stretch;
+      display: grid;
+      justify-content: stretch;
+      width: 100%;
+    }
+
+    .hero__actions :global(.action-link) {
+      width: 100%;
+    }
+
+    .hero__orb {
+      margin-top: var(--space-6);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__reveal {
+      animation: none;
+    }
+  }
+</style>

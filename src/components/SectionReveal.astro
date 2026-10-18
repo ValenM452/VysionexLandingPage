@@ -1,0 +1,46 @@
+<script>
+  const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal-section]"));
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (sections.length > 0 && !reducedMotion && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.setAttribute("data-reveal-visible", "");
+          currentObserver.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -12%", threshold: 0.12 }
+    );
+
+    sections.forEach((section) => {
+      section.setAttribute("data-reveal-ready", "");
+      observer.observe(section);
+    });
+  }
+</script>
+
+<style is:global>
+  [data-reveal-section][data-reveal-ready] [data-reveal] {
+    opacity: 0;
+    transform: translateY(0.625rem);
+    transition:
+      opacity var(--duration-enter) var(--ease-out) var(--reveal-delay, 0ms),
+      transform var(--duration-enter) var(--ease-out) var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal-section][data-reveal-visible] [data-reveal] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal-section][data-reveal-ready] [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

@@ -1,0 +1,51 @@
+/* VYSIONEX visual foundations. Prefer semantic tokens in components. */
+:root {
+  color-scheme: dark;
+
+  /* Color */
+  --color-bg: #050a19;
+  --color-surface: #0a1430;
+  --color-surface-raised: #101d3b;
+  --color-text: #f3f7ff;
+  --color-text-muted: #a8b5d1;
+  --color-accent: #3478ff;
+  --color-accent-light: #6ac7ff;
+  --color-on-accent: #050a19;
+  --color-border: rgb(164 193 255 / 16%);
+  --color-focus: #6ac7ff;
+
+  /* Typography: Manrope is enabled only after an approved local font is added. */
+  --font-sans: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-size-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --line-height-tight: 1.1;
+  --line-height-heading: 1.2;
+  --line-height-body: 1.6;
+
+  /* Spacing uses an 8px base scale. */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
+
+  /* Layout */
+  --container-max: 75rem;
+  --content-max: 45rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  --section-space: clamp(4.5rem, 10vw, 9rem);
+  --header-height: 4.5rem;
+  --header-height-compact: 4rem;
+  --layer-header: 20;
+
+  /* Shape and interaction */
+  --radius-control: 0.75rem;
+  --radius-panel: 1.5rem;
+  --duration-fast: 180ms;
+  --duration-enter: 560ms;
+  --duration-ambient: 24s;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
